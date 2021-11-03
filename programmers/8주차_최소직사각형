@@ -1,0 +1,12 @@
+def solution(sizes):
+    whigh = 0
+    hhigh = 0
+    
+    for w, h in sizes:
+        if w < h:
+            w, h = h, w
+        
+        whigh = max(whigh, w)
+        hhigh = max(hhigh, h)
+        
+    return whigh * hhigh
