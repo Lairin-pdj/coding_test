@@ -9,7 +9,6 @@ nums.sort()
 
 # 이분탐색을 이용한 최소값 체크
 low = 2000000000
-left, right = 0, n - 1
 for i, x in enumerate(nums):
     # 0을 만들 수 있는 값의 위치 파악
     idx = bisect_left(nums, -x)
