@@ -1,3 +1,37 @@
+import sys 
+input = sys.stdin.readline
+
+# 파싱
+n = int(input())
+nums = list(map(int, input().split()))
+
+# 한 값을 고정 시키고 2개 선택
+result = 3000000000
+case = []
+for i in range(n - 2):
+    # 투 포인터를 이용한 탐색
+    low = i + 1
+    high = n - 1
+    while low < high:
+        x = nums[i] + nums[low] + nums[high]
+        
+        if abs(x) < result:
+            result = abs(x)
+            case = [nums[i], nums[low], nums[high]]
+        
+        if x < 0:
+            low += 1
+        elif x > 0:
+            high -= 1
+        else:
+            break
+
+# 결과 출력
+case.sort()
+print(*case)
+
+'''
+# 비효율적인 코드
 from bisect import bisect_left
 import sys 
 input = sys.stdin.readline
@@ -29,3 +63,4 @@ for j in range(n):
 # 결과 출력
 case.sort()
 print(*case)
+'''
