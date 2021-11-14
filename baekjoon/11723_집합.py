@@ -3,26 +3,22 @@ input = sys.stdin.readline
 
 # 파싱
 n = int(input())
-s = set()
+s = [0 for _ in range(21)]
 for _ in range(n):
     query = input().rstrip().split()
     
     if query[0] == "add":
-        s.add(query[1])
+        s[int(query[1])] = 1
     elif query[0] == "remove":
-        if query[1] in s:
-            s.remove(query[1])
+        s[int(query[1])] = 0
     elif query[0] == "check":
-        if query[1] in s:
-            print(1)
-        else:
-            print(0)
+        print(s[int(query[1])])
     elif query[0] == "toggle":
-        if query[1] in s:
-            s.remove(query[1])
+        if s[int(query[1])] == 1:
+            s[int(query[1])] = 0
         else:
-            s.add(query[1])
+            s[int(query[1])] = 1
     elif query[0] == "all":
-        s = set([str(i) for i in range(1, 21)])
+        s = [1 for _ in range(21)]
     else:
-        s = set()
+        s = [0 for _ in range(21)]
