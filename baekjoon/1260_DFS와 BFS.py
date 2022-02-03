@@ -24,16 +24,13 @@ def dfs(node):
             dfs(i)
 
 # dfs 결과 출력
-check = set()
-check.add(v)
+check = set([v])
 dfs(v)
 print()
 
 # bfs 및 결과 출력
-check = set()
-check.add(v)
-queue = deque()
-queue.append(v)
+check = set([v])
+queue = deque([v])
 while queue:
     temp = queue.popleft()
     print(temp, end = " ")
