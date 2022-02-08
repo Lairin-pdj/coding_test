@@ -20,6 +20,95 @@ for i in range(n):
             goal = (i, j)
 
 # bfs
+dx, dy = [1, 0, -1, 0], [0, 1, 0, -1]
+# (red x, y, blue x, y, count, before)
+flag = False
+answer = 0
+queue = deque([(red[0], red[1], blue[0], blue[1], 0, -1)])
+while queue:
+    rx, ry, bx, by, count, before = queue.popleft()
+    
+    # 지정 횟수 초과 시 제외
+    if count >= 10:
+        continue
+    
+    # 4방향 이동
+    for i in range(4):
+        if before != i % 2:
+            arx, ary, abx, aby = rx, ry, bx, by
+            rcheck = False
+            bcheck = False
+            
+            # 이동
+            rc, bc = 0, 0
+            while board[arx][ary] != "#":
+                if (arx, ary) == goal:
+                    rcheck = True
+                    break
+                arx += dx[i]
+                ary += dy[i]
+                rc += 1
+            while board[abx][aby] != "#":
+                if (abx, aby) == goal:
+                    bcheck = True
+                    break
+                abx += dx[i]
+                aby += dy[i]
+                bc += 1
+            
+            # 충돌 처리
+            if (arx, ary) == (abx, aby):
+                if rc > bc:
+                    arx -= dx[i]
+                    ary -= dy[i]
+                else:
+                    abx -= dx[i]
+                    aby -= dy[i]
+            
+            # 성공여부 체크 및 추후 전개
+            if not bcheck:
+                if rcheck:
+                    flag = True
+                    answer = count + 1
+                    break
+                else:
+                    queue.append((arx - dx[i], ary - dy[i], abx - dx[i], aby - dy[i], count + 1, i % 2))
+    
+    # 성공시 탈출
+    if flag:
+        break
+
+# 결과출력
+if flag:
+    print(answer)
+else:
+    print(-1)
+
+
+'''
+# 과거 비효율적 코드
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+# 파싱
+n, m = map(int, input().split())
+board = [input().rstrip() for _ in range(n)]
+
+# 각 위치 파악
+red = []
+blue = []
+goal = []
+for i in range(n):
+    for j in range(m):
+        if board[i][j] == "B":
+            blue = (i, j)
+        elif board[i][j] == "R":
+            red = (i, j)
+        elif board[i][j] == "O":
+            goal = (i, j)
+
+# bfs
 # (red x, y, blue x, y, count, before)
 flag = False
 answer = 0
@@ -356,3 +445,4 @@ if flag:
     print(answer)
 else:
     print(-1)
+'''
