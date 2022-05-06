@@ -12,12 +12,17 @@ def dfs(x, y):
         answer.add(tuple(sorted(stack)))
         return
     
+    # 이미 확인 해본 케이스 탈출
+    if tuple(sorted(stack)) in check:
+        return
+    
     # 전파가능 리스트 생성
     can = set()
     for sx, sy in stack:
         for i in range(4):
             can.add((sx + dx[i], sy + dy[i]))
     
+    # 전파
     for ax, ay in can:    
         if 0 <= ax < 5 and 0 <= ay < 5 and (ax, ay) not in stack:
             # 불가능한 케이스 제거 
@@ -31,13 +36,17 @@ def dfs(x, y):
             px, py = stack.pop()
             if table[px][py] == "Y":
                 ycount -= 1
+    
+    # 완벽 확인이 끝난 조 체크
+    check.add(tuple(sorted(stack)))
 
 # 파싱
 table = [input().rstrip() for _ in range(5)]
-stack = []
-ycount = 0
 
 # 순회 dfs
+stack = []
+check = set()
+ycount = 0
 answer = set()
 for i in range(5):
     for j in range(5):
