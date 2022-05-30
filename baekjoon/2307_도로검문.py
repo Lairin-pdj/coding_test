@@ -60,7 +60,6 @@ for i in range(len(route) - 1):
     dist = [inf] * (n + 1)
     dist[1] = 0
     visited = [False] * (n + 1)
-    update = [0] * (n + 1)
     
     queue = [(0, 1)]
     while queue:
@@ -73,7 +72,6 @@ for i in range(len(route) - 1):
             for i, d in dic[target]:
                 cost = dist[target] + d
                 if cost < dist[i]:
-                    update[i] = target
                     dist[i] = cost
                     heappush(queue, (total + d, i))
     
